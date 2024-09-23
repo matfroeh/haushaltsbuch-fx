@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<SplitPane dividerPositions="0.6664826062948647" prefHeight="648.0" prefWidth="1210.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.mfrHaushaltsbuchFx.gui.BudgetOverviewController">
+      <VBox fx:id="leftVBox" prefHeight="645.0" prefWidth="783.0" spacing="10">
+      <Group>
+         <children>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label prefHeight="17.0" prefWidth="41.0" text="Betrag:" />
+                    <TextField fx:id="amountField" prefHeight="25.0" prefWidth="110.0" />
+               <Label prefHeight="17.0" prefWidth="24.0" text="€" />
+               <RadioButton fx:id="rdButtonExpense" mnemonicParsing="false" prefHeight="17.0" prefWidth="92.0" selected="true" text="Ausgaben">
+                  <toggleGroup>
+                     <ToggleGroup fx:id="toggleGrp" />
+                  </toggleGroup>
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </RadioButton>
+               <RadioButton fx:id="rdButtonIncome" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Einnahmen" toggleGroup="$toggleGrp">
+                  <HBox.margin>
+                     <Insets left="5.0" />
+                  </HBox.margin>
+                  <font>
+                                  <Font name="System Bold" size="12.0" />
+                  </font>
+               </RadioButton>
+               <CheckBox fx:id="checkBoxIsNewEntryReoccurring" mnemonicParsing="false" onAction="#handleReoccurrenceInputFields" prefHeight="17.0" prefWidth="108.0" text="Wiederkehrend">
+                  <HBox.margin>
+                     <Insets left="20.0" />
+                  </HBox.margin>
+               </CheckBox>
+               <Label fx:id="labelIntervalField" disable="true" text="Intervall (in Monate):" />
+               <TextField fx:id="intervalField" disable="true" prefHeight="25.0" prefWidth="46.0" />
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" layoutY="35.0" spacing="10">
+                    <Label prefHeight="17.0" prefWidth="41.0" text="Datum:" />
+                    <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="111.0" />
+                    <Label prefHeight="17.0" prefWidth="74.0" text="Kategorie:" />
+                    <ChoiceBox fx:id="categoryChoiceBoxForNewEntry" prefHeight="25.0" prefWidth="157.0">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Lebensmittel" />
+                                <String fx:value="Haushalt" />
+                                <String fx:value="Miete" />
+                                <String fx:value="Gehalt" />
+                                <String fx:value="Sonstiges" />
+                            </FXCollections>
+                        </items>
+                    </ChoiceBox>
+                    <Label prefHeight="17.0" prefWidth="84.0" text="Beschreibung:" />
+                    <TextField fx:id="descriptionField" prefHeight="25.0" prefWidth="227.0" />
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+                </HBox>
+            <HBox alignment="CENTER_LEFT" layoutY="70.0" prefHeight="24.0" prefWidth="801.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="25.0" prefWidth="272.0">
+                     <children>
+                            <Button fx:id="btnAdd" onAction="#addEntry" prefHeight="25.0" prefWidth="146.0" text="Hinzufügen">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="514.0">
+                     <children>
+                            <Button fx:id="btnEdit" disable="true" onAction="#editEntry" prefHeight="25.0" prefWidth="139.0" text="Bearbeiten" />
+                        <Button fx:id="btnSaveEditedEntry" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Änderungen speichern">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </Button>
+                            <Button fx:id="btnDelete" disable="true" onAction="#deleteEntry" prefHeight="25.0" prefWidth="109.0" text="Löschen">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnCancelEdit" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" text="Bearbeiten abbrechen">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+            </HBox>
+            <HBox layoutY="105.0" prefHeight="32.0" prefWidth="784.0">
+               <children>
+                  <Pane prefHeight="28.0" prefWidth="156.0" />
+                  <Button fx:id="btnAddFutureBookings" disable="true" mnemonicParsing="false" onAction="#addFutureReoccurringBookings" prefHeight="25.0" prefWidth="235.0" text="Wiederkehrende Buchungen einfügen" wrapText="true" />
+                  <Label fx:id="labelEndDateOfReoccurrence" disable="true" prefHeight="25.0" prefWidth="199.0" text="Wiederkehrend bis einschließlich:" wrapText="true">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <DatePicker fx:id="datePickerEndDateOfReoccurrence" disable="true" prefHeight="25.0" prefWidth="114.0" />
+               </children>
+            </HBox>
+         </children>
+      </Group>
+          <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="812.0">
+              <Label prefHeight="17.0" prefWidth="72.0" text="Status:">
+                  <HBox.margin>
+                      <Insets left="15.0" />
+                  </HBox.margin>
+                  <font>
+                      <Font name="System Italic" size="12.0" />
+                  </font>
+              </Label>
+              <Label fx:id="statusNotifier" alignment="CENTER" prefHeight="17.0" prefWidth="713.0" />
+          </HBox>
+      <Separator prefHeight="3.0" prefWidth="779.0" />
+      <Group>
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="759.0">
+               <children>
+                  <Pane prefHeight="25.0" prefWidth="306.0" />
+                       <Label prefHeight="17.0" prefWidth="80.0" text="Anzeigefilter">
+                           <font>
+                               <Font name="System Bold" size="12.0" />
+                           </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                       </Label>
+                  <CheckBox fx:id="checkBoxIsFilterActive" mnemonicParsing="false" prefHeight="17.0" prefWidth="53.0" text="aktiv">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </CheckBox>
+                  <Pane prefHeight="25.0" prefWidth="86.0" />
+                  <TextField fx:id="searchField" prefHeight="25.0" prefWidth="204.0" promptText="(Alles durchsuchen)">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+                <HBox fx:id="containerFilterControls" alignment="CENTER_LEFT" layoutY="27.0" prefHeight="25.0" prefWidth="756.0">
+                    <Label prefHeight="17.0" prefWidth="87.0" text="Zeitraum von:">
+                  <HBox.margin>
+                     <Insets left="15.0" />
+                  </HBox.margin>
+               </Label>
+               <DatePicker fx:id="dateStartPicker" prefHeight="25.0" prefWidth="110.0" />
+                    <Label prefHeight="17.0" prefWidth="32.0" text="bis:">
+                        <HBox.margin>
+                            <Insets left="15.0" />
+                        </HBox.margin>
+                    </Label>
+               <DatePicker fx:id="datePeriodEndPicker" prefWidth="110.0" />
+                    <CheckBox fx:id="checkBoxShowExpensesOnly" mnemonicParsing="false" prefHeight="17.0" prefWidth="115.0" text="Nur Ausgaben">
+                        <HBox.margin>
+                            <Insets left="70.0" />
+                        </HBox.margin>
+                    </CheckBox>
+                    <CheckBox fx:id="checkBoxReoccurringOnly" mnemonicParsing="false" prefHeight="17.0" prefWidth="136.0" text="Nur wiederkehrend" />
+                </HBox>
+         </children>
+      </Group>
+      <TableView fx:id="tableAccountingBook" editable="true" prefHeight="393.0" prefWidth="766.0">
+        <columns>
+          <TableColumn fx:id="colDate" prefWidth="124.99999749660492" text="Datum" />
+            <TableColumn fx:id="colAmount" prefWidth="138.9999771118164" text="Betrag (€)" />
+            <TableColumn fx:id="colCategory" prefWidth="139.66665649414062" text="Kategorie" />
+            <TableColumn fx:id="colDescription" prefWidth="158.33334350585938" text="Beschreibung" />
+            <TableColumn fx:id="colReoccurrence" prefWidth="208.66668701171875" text="Buchungstyp" />
+        </columns>
+      </TableView>
+      </VBox>
+      <VBox alignment="CENTER" prefHeight="786.0" prefWidth="373.0">
+      <VBox>
+         <children>
+                <TextArea fx:id="summaryOutputTxtArea" editable="false" prefHeight="510.0" prefWidth="400.0" />
+         </children>
+      </VBox>
+      <VBox>
+         <children>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Separator>
+            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="299.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="125.0" text="Summe in Kategorie:">
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="comboBoxFilterByCategories" prefHeight="25.0" prefWidth="127.0" />
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <TextArea fx:id="outputTextAreaSummaryCategory" editable="false" prefHeight="180.0" prefWidth="400.0" wrapText="true">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></TextArea>
+                <PieChart fx:id="pieChart" prefHeight="380.0" prefWidth="299.0" />
+         </children>
+      </VBox>
+      </VBox>
+  </SplitPane>
